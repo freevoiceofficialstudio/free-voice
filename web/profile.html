@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Profile — Free Voice</title>
-  <meta name="description" content="Manage your Free Voice account and membership status." />
+  <meta name="description" content="View your Free Voice profile, membership status and remaining time." />
   <meta name="author" content="Subhan Ahmad" />
 
   <style>
@@ -49,22 +49,24 @@
     }
     .value {
       font-size: 18px;
-      margin-top: 4px;
+      margin-top: 6px;
     }
-    .status-active {
-      color: #22c55e;
-      font-weight: 600;
+    .countdown {
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 10px;
+      color: #3b82f6;
     }
-    .status-expired {
+    .expired {
       color: #ef4444;
-      font-weight: 600;
+      font-weight: 700;
     }
     .btn {
       display: inline-block;
       margin-top: 16px;
       background: #3b82f6;
       color: #fff;
-      padding: 12px 22px;
+      padding: 14px 24px;
       border-radius: 10px;
       text-decoration: none;
       font-weight: 600;
@@ -82,20 +84,26 @@
 
     <div class="card">
       <div class="label">Name</div>
-      <div class="value" id="userName">—</div>
+      <div class="value" id="userName">Loading...</div>
 
       <div class="label" style="margin-top:16px;">Email</div>
-      <div class="value" id="userEmail">—</div>
+      <div class="value" id="userEmail">Loading...</div>
     </div>
 
     <div class="card">
       <div class="label">Membership Status</div>
-      <div class="value status-expired" id="membershipStatus">Not Active</div>
+      <div class="value" id="membershipTier">Checking...</div>
 
       <div class="label" style="margin-top:16px;">Remaining Time</div>
-      <div class="value" id="remainingTime">00:00:00</div>
+      <div class="countdown" id="countdown">--:--:--</div>
 
-      <a class="btn" href="/premium.html">Upgrade Membership</a>
+      <div id="expiredMsg" class="expired" style="display:none;margin-top:12px;">
+        Membership expired. Live voice has been locked.
+      </div>
+
+      <a id="upgradeBtn" class="btn" href="/premium.html" style="display:none;">
+        Upgrade Membership
+      </a>
     </div>
   </main>
 
@@ -103,10 +111,50 @@
     © 2025 Free Voice · Built by Subhan Ahmad
   </footer>
 
-  <!-- =========
-       NOTE:
-       Real data is injected via shared JS logic
-       (authManager + membershipManager)
-  ========= -->
+  <script>
+    // MOCK USER DATA (will be replaced by Firebase Google Auth)
+    const user = {
+      name: "Google User",
+      email: "user@gmail.com",
+      membership: {
+        tier: "monthly",
+        expiry: Date.now() + (1000 * 60 * 60 * 26) // 26 hours remaining
+      }
+    };
+
+    document.getElementById("userName").textContent = user.name;
+    document.getElementById("userEmail").textContent = user.email;
+    document.getElementById("membershipTier").textContent =
+      user.membership.tier.toUpperCase();
+
+    const countdownEl = document.getElementById("countdown");
+    const expiredMsg = document.getElementById("expiredMsg");
+    const upgradeBtn = document.getElementById("upgradeBtn");
+
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = user.membership.expiry - now;
+
+      if (diff <= 0) {
+        countdownEl.textContent = "00:00:00";
+        expiredMsg.style.display = "block";
+        upgradeBtn.style.display = "inline-block";
+        document.getElementById("membershipTier").textContent = "EXPIRED";
+        return;
+      }
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownEl.textContent =
+        String(hours).padStart(2, "0") + ":" +
+        String(minutes).padStart(2, "0") + ":" +
+        String(seconds).padStart(2, "0");
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
 </body>
 </html>
