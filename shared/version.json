@@ -1,0 +1,48 @@
+{
+  "product": "Free Voice",
+  "owner": "Subhan Ahmad",
+
+  "currentVersion": "1.0.0",
+  "build": 100,
+  "releaseDate": "2025-01-01",
+
+  "forceUpdate": false,
+  "forceUpdateMessage": "A new version of Free Voice is available. Please update to continue.",
+
+  "supportedPlatforms": {
+    "web": {
+      "minVersion": "1.0.0",
+      "latestVersion": "1.0.0",
+      "updateRequired": false
+    },
+    "desktop": {
+      "minVersion": "1.0.0",
+      "latestVersion": "1.0.0",
+      "updateRequired": false
+    },
+    "android": {
+      "minVersion": "1.0.0",
+      "latestVersion": "1.0.0",
+      "updateRequired": false
+    }
+  },
+
+  "updateEndpoints": {
+    "voices": "/shared/voices.json",
+    "premiumRules": "/shared/premium.json",
+    "versionInfo": "/shared/version.json"
+  },
+
+  "cacheRules": {
+    "allowCache": false,
+    "maxAgeSeconds": 0
+  },
+
+  "security": {
+    "validateIntegrity": true,
+    "blockIfTampered": true,
+    "blockIfOutdated": false
+  },
+
+  "notes": "All Free Voice apps must fetch this file on startup to determine feature availability, updates, and security rules."
+}
