@@ -1,213 +1,147 @@
-/* =========================================================
-   FREE VOICE — GLOBAL APPLICATION CONFIGURATION
+/* ============================================================
+   Free Voice — Global App Config Loader
    Owner: Subhan Ahmad
-   Product: Free Voice
    File: shared/app.config.js
-   DO NOT MODIFY AFTER INITIAL BUILD
-========================================================= */
+   ============================================================ */
 
-const APP_CONFIG = Object.freeze({
+(function () {
+  "use strict";
 
-  /* =====================================================
-     BASIC APP INFO
-  ===================================================== */
-  app: {
-    name: "Free Voice",
-    slug: "free-voice",
+  const APP_CONFIG = {
+    product: "Free Voice",
     owner: "Subhan Ahmad",
-    version: "1.0.0",
-    environment: "production", // development | production
-    website: "https://freevoice.app",
-    supportEmail: "jobsofficial786@gmail.com",
-    copyright: `© ${new Date().getFullYear()} Free Voice`
-  },
 
-  /* =====================================================
-     PLATFORM FLAGS
-  ===================================================== */
-  platforms: {
-    web: {
-      enabled: true,
-      seoEnabled: true,
-      liveVoiceAllowed: false
-    },
-    mobile: {
-      enabled: true,
-      liveVoiceAllowed: true,
-      backgroundMicRequired: true
-    },
-    desktop: {
-      enabled: true,
-      liveVoiceAllowed: true,
-      systemMicIntercept: true
-    }
-  },
-
-  /* =====================================================
-     AUTHENTICATION RULES
-  ===================================================== */
-  auth: {
-    provider: "google",
-    allowAnonymous: false,
-    autoCreateProfile: true,
-    requiredFields: [
-      "uid",
-      "name",
-      "email",
-      "photoURL",
-      "membership",
-      "membershipExpiry"
-    ]
-  },
-
-  /* =====================================================
-     MEMBERSHIP SYSTEM (STRICT)
-  ===================================================== */
-  membership: {
-    requiredForLiveVoice: true,
-    requiredForUltraVoices: true,
-
-    plans: {
-      weekly: {
-        id: "weekly",
-        durationMs: 7 * 24 * 60 * 60 * 1000
-      },
-      monthly: {
-        id: "monthly",
-        durationMs: 30 * 24 * 60 * 60 * 1000
-      },
-      yearly: {
-        id: "yearly",
-        durationMs: 365 * 24 * 60 * 60 * 1000
-      }
-    },
-
-    expirationBehavior: {
-      lockImmediately: true,
-      disableLiveVoice: true,
-      disableUltraVoices: true,
-      forceRecheckIntervalMs: 5000
-    }
-  },
-
-  /* =====================================================
-     VOICE SYSTEM RULES
-  ===================================================== */
-  voiceSystem: {
-    allowPreinstalledVoices: false,
-
-    downloadRequired: true,
-
-    offlineMode: {
-      enabled: true,
-      allowModification: false,
-      allowCopy: false
-    },
-
-    categories: {
-      free: {
-        requiresMembership: false
-      },
-      premium: {
-        requiresMembership: true
-      },
-      ultra: {
-        requiresMembership: true,
-        ultraRealistic: true
-      }
-    },
-
-    liveVoice: {
-      enabled: true,
-      requiresMembership: true,
-      realtimeProcessing: true,
-      latencyTargetMs: 30,
-      stopOnExpiry: true,
-      preventOfflineBypass: true
-    }
-  },
-
-  /* =====================================================
-     STRIPE CONFIG (ENV ONLY)
-  ===================================================== */
-  stripe: {
-    enabled: true,
-    mode: "live",
-    keys: {
-      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-      secretKey: process.env.STRIPE_SECRET_KEY
-    },
-    checkoutLinks: {
-      weekly: "https://buy.stripe.com/fZufZg2zKe3zcyAep6gjC04",
-      monthly: "https://buy.stripe.com/8x2fZg7U47Fb56894MgjC05",
-      yearly: "https://buy.stripe.com/cNi14ma2cbVr2Y080IgjC06"
-    },
-    webhook: {
-      validateServerSideOnly: true,
-      rejectClientCalls: true
-    }
-  },
-
-  /* =====================================================
-     UPDATE SYSTEM (JSON BASED)
-  ===================================================== */
-  updates: {
-    enabled: true,
-    source: "cloud",
     endpoints: {
-      voices: "/data/voices.json",
-      premium: "/data/premium.json",
-      version: "/data/version.json"
-    },
-    autoRefreshIntervalMs: 60000
-  },
-
-  /* =====================================================
-     UI THEME (SIMPLE, CLEAN, FINAL)
-  ===================================================== */
-  ui: {
-    theme: {
-      modeSupport: ["light", "dark"],
-      primaryColor: "#6366F1",   // Indigo
-      secondaryColor: "#0F172A", // Dark slate
-      accentColor: "#22C55E",    // Green
-      backgroundLight: "#FFFFFF",
-      backgroundDark: "#020617",
-      textLight: "#020617",
-      textDark: "#E5E7EB"
+      baseUrl: "",
+      voices: "/shared/voices.json",
+      premium: "/shared/premium.json",
+      version: "/shared/version.json"
     },
 
-    layout: {
-      maxWidth: 1200,
-      borderRadius: 12,
-      spacingUnit: 8
+    runtime: {
+      initialized: false,
+      online: navigator.onLine,
+      lastSync: null
+    },
+
+    data: {
+      voices: null,
+      premium: null,
+      version: null
+    },
+
+    security: {
+      blockOnFailure: true,
+      integrityCheck: true
     }
-  },
+  };
 
-  /* =====================================================
-     SECURITY FLAGS
-  ===================================================== */
-  security: {
-    frontendBypassProtection: true,
-    serverValidationRequired: true,
-    tamperDetectionEnabled: true,
-    blockModifiedApps: true,
-    strictMembershipVerification: true
-  },
+  /* ------------------ Utility ------------------ */
 
-  /* =====================================================
-     LEGAL & DISCLAIMERS
-  ===================================================== */
-  legal: {
-    aiGeneratedVoices: true,
-    userResponsibility: true,
-    fairUseDisclaimer: true
+  function noCacheUrl(url) {
+    return url + "?t=" + Date.now();
   }
 
-});
+  async function fetchJson(url) {
+    const res = await fetch(noCacheUrl(url), {
+      cache: "no-store",
+      credentials: "omit"
+    });
 
-export default APP_CONFIG;
+    if (!res.ok) {
+      throw new Error("Failed to load " + url);
+    }
+    return res.json();
+  }
 
-/* =========================================================
-   END OF FILE — DO NOT SPLIT — DO NOT EDIT
-========================================================= */
+  /* ------------------ Loaders ------------------ */
+
+  async function loadVoices() {
+    APP_CONFIG.data.voices = await fetchJson(
+      APP_CONFIG.endpoints.voices
+    );
+  }
+
+  async function loadPremiumRules() {
+    APP_CONFIG.data.premium = await fetchJson(
+      APP_CONFIG.endpoints.premium
+    );
+  }
+
+  async function loadVersionInfo() {
+    APP_CONFIG.data.version = await fetchJson(
+      APP_CONFIG.endpoints.version
+    );
+  }
+
+  /* ------------------ Validation ------------------ */
+
+  function validateData() {
+    if (
+      !APP_CONFIG.data.voices ||
+      !APP_CONFIG.data.premium ||
+      !APP_CONFIG.data.version
+    ) {
+      throw new Error("Config validation failed");
+    }
+  }
+
+  function checkForcedUpdate() {
+    const version = APP_CONFIG.data.version;
+    if (version.forceUpdate === true) {
+      alert(version.forceUpdateMessage || "Update required");
+      window.location.reload();
+    }
+  }
+
+  /* ------------------ Init ------------------ */
+
+  async function init() {
+    if (APP_CONFIG.runtime.initialized) return;
+
+    try {
+      await Promise.all([
+        loadVoices(),
+        loadPremiumRules(),
+        loadVersionInfo()
+      ]);
+
+      validateData();
+      checkForcedUpdate();
+
+      APP_CONFIG.runtime.initialized = true;
+      APP_CONFIG.runtime.lastSync = Date.now();
+
+      console.log("[Free Voice] Config loaded successfully");
+
+    } catch (err) {
+      console.error("[Free Voice] Config error:", err);
+
+      if (APP_CONFIG.security.blockOnFailure) {
+        alert("Free Voice failed to initialize securely.");
+      }
+    }
+  }
+
+  /* ------------------ Network Watch ------------------ */
+
+  window.addEventListener("online", () => {
+    APP_CONFIG.runtime.online = true;
+    init();
+  });
+
+  window.addEventListener("offline", () => {
+    APP_CONFIG.runtime.online = false;
+  });
+
+  /* ------------------ Expose ------------------ */
+
+  window.FreeVoiceConfig = {
+    init,
+    getVoices: () => APP_CONFIG.data.voices,
+    getPremiumRules: () => APP_CONFIG.data.premium,
+    getVersion: () => APP_CONFIG.data.version,
+    isOnline: () => APP_CONFIG.runtime.online
+  };
+
+})();
