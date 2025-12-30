@@ -1,0 +1,100 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-01-01",
+  "notes": "Voice metadata only. No audio or models are stored or hosted by Free Voice.",
+
+  "tiers": {
+    "free": {
+      "label": "Free",
+      "liveAllowed": false,
+      "downloadAllowed": true
+    },
+    "premium": {
+      "label": "Premium",
+      "liveAllowed": true,
+      "downloadAllowed": true
+    },
+    "ultra": {
+      "label": "Ultra Realistic",
+      "liveAllowed": true,
+      "downloadAllowed": true
+    }
+  },
+
+  "voices": [
+    {
+      "id": "fv_free_male_01",
+      "name": "Natural Male",
+      "gender": "male",
+      "language": "en",
+      "tier": "free",
+      "realism": 0.55,
+      "live": false,
+      "downloadable": true,
+      "offline": true,
+      "description": "Basic natural male voice for casual use."
+    },
+    {
+      "id": "fv_free_female_01",
+      "name": "Natural Female",
+      "gender": "female",
+      "language": "en",
+      "tier": "free",
+      "realism": 0.56,
+      "live": false,
+      "downloadable": true,
+      "offline": true,
+      "description": "Basic natural female voice."
+    },
+
+    {
+      "id": "fv_premium_male_01",
+      "name": "Studio Male",
+      "gender": "male",
+      "language": "en",
+      "tier": "premium",
+      "realism": 0.78,
+      "live": true,
+      "downloadable": true,
+      "offline": true,
+      "description": "High quality male voice with live support."
+    },
+    {
+      "id": "fv_premium_female_01",
+      "name": "Studio Female",
+      "gender": "female",
+      "language": "en",
+      "tier": "premium",
+      "realism": 0.80,
+      "live": true,
+      "downloadable": true,
+      "offline": true,
+      "description": "Clear and expressive premium female voice."
+    },
+
+    {
+      "id": "fv_ultra_male_01",
+      "name": "Ultra Real Male",
+      "gender": "male",
+      "language": "en",
+      "tier": "ultra",
+      "realism": 0.95,
+      "live": true,
+      "downloadable": true,
+      "offline": true,
+      "description": "Ultra realistic human-like male voice."
+    },
+    {
+      "id": "fv_ultra_female_01",
+      "name": "Ultra Real Female",
+      "gender": "female",
+      "language": "en",
+      "tier": "ultra",
+      "realism": 0.96,
+      "live": true,
+      "downloadable": true,
+      "offline": true,
+      "description": "Ultra realistic female voice for professional use."
+    }
+  ]
+}
