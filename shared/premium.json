@@ -1,0 +1,61 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-01-01",
+
+  "membershipTiers": {
+    "none": {
+      "label": "No Membership",
+      "liveVoice": false,
+      "ultraVoices": false,
+      "backgroundMode": false,
+      "offlineBypass": false
+    },
+
+    "weekly": {
+      "label": "Weekly Premium",
+      "liveVoice": true,
+      "ultraVoices": false,
+      "backgroundMode": true,
+      "offlineBypass": false,
+      "durationHours": 168
+    },
+
+    "monthly": {
+      "label": "Monthly Premium",
+      "liveVoice": true,
+      "ultraVoices": true,
+      "backgroundMode": true,
+      "offlineBypass": false,
+      "durationHours": 720
+    },
+
+    "yearly": {
+      "label": "Yearly Premium",
+      "liveVoice": true,
+      "ultraVoices": true,
+      "backgroundMode": true,
+      "offlineBypass": false,
+      "durationHours": 8760
+    }
+  },
+
+  "enforcementRules": {
+    "requireRealtimeValidation": true,
+    "checkIntervalSeconds": 10,
+    "lockImmediatelyOnExpiry": true,
+    "lockIfClockManipulated": true,
+    "lockIfNetworkSpoofed": true,
+    "lockIfAppModified": true
+  },
+
+  "uiRules": {
+    "showCountdown": true,
+    "countdownFormat": "DD:HH:MM:SS",
+    "redirectOnExpiry": "/premium.html"
+  },
+
+  "securityNotes": {
+    "description": "This file defines client-side enforcement rules. Final validation must always be confirmed server-side via Firebase + Stripe webhooks.",
+    "offlineWarning": "Offline access never bypasses live voice restrictions."
+  }
+}
