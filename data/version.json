@@ -1,1 +1,60 @@
+{
+  "product": "Free Voice",
+  "owner": "Subhan Ahmad",
+
+  "versioning": {
+    "current": "1.0.0",
+    "minimumSupported": "1.0.0",
+    "forceUpdate": false
+  },
+
+  "builds": {
+    "web": {
+      "version": "1.0.0",
+      "build": "2025.01.01",
+      "forceReload": false
+    },
+    "desktop": {
+      "version": "1.0.0",
+      "build": "2025.01.01",
+      "forceReload": false
+    },
+    "mobile": {
+      "version": "1.0.0",
+      "build": "2025.01.01",
+      "forceReload": false
+    }
+  },
+
+  "features": {
+    "liveVoice": true,
+    "offlineVoices": true,
+    "ultraVoices": true,
+    "membershipEnforcement": true
+  },
+
+  "updatePolicy": {
+    "checkOnLaunch": true,
+    "checkIntervalMinutes": 30,
+    "autoRefreshJSON": true,
+    "clearCacheOnMajor": true
+  },
+
+  "messages": {
+    "maintenance": {
+      "enabled": false,
+      "text": ""
+    },
+    "forceUpdate": {
+      "enabled": false,
+      "text": "A new version of Free Voice is available. Please refresh or update to continue."
+    }
+  },
+
+  "integrity": {
+    "signature": "FREE_VOICE_VERSION_V1",
+    "tamperProtection": true
+  }
+}
+
 
