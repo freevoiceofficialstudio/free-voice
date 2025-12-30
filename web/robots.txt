@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://freevoice.app/sitemap.xml
