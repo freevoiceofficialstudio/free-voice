@@ -1,1 +1,76 @@
+[
+  {
+    "id": "fv_free_male_01",
+    "name": "Clear Male",
+    "category": "free",
+    "gender": "male",
+    "style": "natural",
+    "language": "en",
+    "preview": false,
+    "description": "Clean and natural male voice suitable for general use",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "id": "fv_free_female_01",
+    "name": "Soft Female",
+    "category": "free",
+    "gender": "female",
+    "style": "soft",
+    "language": "en",
+    "preview": false,
+    "description": "Soft female tone for casual conversations",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "id": "fv_premium_male_01",
+    "name": "Deep Pro Male",
+    "category": "premium",
+    "gender": "male",
+    "style": "deep",
+    "language": "en",
+    "preview": false,
+    "description": "Professional deep male voice for calls and games",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "id": "fv_premium_female_01",
+    "name": "Studio Female",
+    "category": "premium",
+    "gender": "female",
+    "style": "studio",
+    "language": "en",
+    "preview": false,
+    "description": "Studio-quality female voice with balanced tone",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "id": "fv_ultra_male_01",
+    "name": "Ultra Real Male",
+    "category": "ultra",
+    "gender": "male",
+    "style": "ultra-realistic",
+    "language": "en",
+    "preview": false,
+    "description": "Ultra-realistic human-like male voice (paid only)",
+    "version": "1.0.0",
+    "enabled": true
+  },
+  {
+    "id": "fv_ultra_female_01",
+    "name": "Ultra Real Female",
+    "category": "ultra",
+    "gender": "female",
+    "style": "ultra-realistic",
+    "language": "en",
+    "preview": false,
+    "description": "Ultra-realistic human-like female voice (paid only)",
+    "version": "1.0.0",
+    "enabled": true
+  }
+]
+
 
