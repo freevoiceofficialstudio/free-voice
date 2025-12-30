@@ -1,1 +1,74 @@
+{
+  "meta": {
+    "product": "Free Voice",
+    "owner": "Subhan Ahmad",
+    "configVersion": "1.0.0",
+    "lastUpdated": "2025-01-01"
+  },
+
+  "features": {
+    "recordVoice": true,
+    "uploadVoice": true,
+    "downloadVoice": true,
+
+    "liveVoiceChange": {
+      "enabled": true,
+      "requiresMembership": true,
+      "forceDisableOnExpiry": true
+    },
+
+    "offlineVoices": {
+      "enabled": true,
+      "modifiable": false,
+      "copyable": false
+    }
+  },
+
+  "voiceAccess": {
+    "free": {
+      "requiresMembership": false,
+      "liveAllowed": false
+    },
+    "premium": {
+      "requiresMembership": true,
+      "liveAllowed": true
+    },
+    "ultra": {
+      "requiresMembership": true,
+      "liveAllowed": true,
+      "paidOnly": true
+    }
+  },
+
+  "membershipPlans": {
+    "weekly": {
+      "id": "weekly",
+      "durationDays": 7,
+      "label": "Weekly Premium",
+      "liveVoice": true,
+      "ultraVoices": false
+    },
+    "monthly": {
+      "id": "monthly",
+      "durationDays": 30,
+      "label": "Monthly Premium",
+      "liveVoice": true,
+      "ultraVoices": true
+    },
+    "yearly": {
+      "id": "yearly",
+      "durationDays": 365,
+      "label": "Yearly Premium",
+      "liveVoice": true,
+      "ultraVoices": true
+    }
+  },
+
+  "enforcement": {
+    "checkIntervalSeconds": 10,
+    "lockImmediatelyOnExpiry": true,
+    "offlineBypassAllowed": false
+  }
+}
+
 
